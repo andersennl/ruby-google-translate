@@ -22,6 +22,14 @@ class Translator
   end
 
   def self.target_language(input)
+    case source_language(input)
+    when 'de'
+      'en'
+    else 'de'
+    end
+  end
+
+  def self.source_language(input)
     LanguageDetector.call(input)
   end
 end

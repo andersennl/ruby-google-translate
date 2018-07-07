@@ -13,12 +13,13 @@ describe Translator do
     end
 
     before do
-      allow(LanguageDetector).to receive(:call) { target_language }
+      allow(LanguageDetector).to receive(:call) { source_language }
       allow(JSON).to receive(:parse)
     end
 
     context 'with an english text' do
       let(:input) { 'this is an english text' }
+      let(:source_language) { 'en' }
       let(:target_language) { 'de' }
 
       it 'posts the correct payload to google translation api' do
@@ -30,6 +31,7 @@ describe Translator do
 
     context 'with a german text' do
       let(:input) { 'das ist ein deutscher text' }
+      let(:source_language) { 'de' }
       let(:target_language) { 'en' }
 
       it 'posts the correct payload to google translation api' do
