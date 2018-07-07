@@ -1,13 +1,10 @@
+require_relative './translator.rb'
+
 class Client
-  def self.translate(text)
+  def self.translate(input)
+    Translator.call(input)
   end
 end
 
 input = ARGV[0]
-
-
-
-
-# response = RestClient.post(URL, payload)
-
-# p response["data"]["translations"]["translatedText"]
+p Client.translate(input)
