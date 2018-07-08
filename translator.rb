@@ -7,7 +7,7 @@ require 'htmlentities'
 class Translator
   URL = 'https://translation.googleapis.com/language/translate/v2'.freeze
 
-  def self.call(input)
+  def call(input)
     payload = {
       q: input,
       target: target_language(input),
@@ -17,12 +17,12 @@ class Translator
     post(URL, payload)
   end
 
-  def self.post(url, payload)
+  def post(url, payload)
     result = RestClient.post(url, payload)
      HTMLEntities.new.decode JSON.parse(result.body)['data']['translations'][0]['translatedText']
   end
 
-  def self.target_language(input)
+  def target_language(input)
     case source_language(input)
     when 'de'
       'en'
@@ -30,7 +30,7 @@ class Translator
     end
   end
 
-  def self.source_language(input)
-    LanguageDetector.call(input)
+  def source_language(input)
+    LanguageDetector.new.call(input)
   end
 end

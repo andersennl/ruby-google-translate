@@ -5,7 +5,7 @@ require_relative './env.rb'
 class LanguageDetector
   URL = 'https://translation.googleapis.com/language/translate/v2/detect'.freeze
 
-  def self.call(input)
+  def call(input)
     payload = {
       q: input,
       key: $API_KEY#Env.api_key
