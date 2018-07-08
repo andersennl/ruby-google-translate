@@ -6,5 +6,5 @@ class Client
   end
 end
 
-input = ARGV.join(" ")
+input = ARGV.join(' ')
 puts Client.new.translate(input)
