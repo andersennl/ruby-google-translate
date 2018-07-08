@@ -13,7 +13,7 @@ describe Translator do
     end
 
     before do
-      allow(LanguageDetector).to receive(:call) { source_language }
+      allow_any_instance_of(LanguageDetector).to receive(:call) { source_language }
       allow(JSON).to receive(:parse)
     end
 
@@ -23,9 +23,9 @@ describe Translator do
       let(:target_language) { 'de' }
 
       it 'posts the correct payload to google translation api' do
-        expect(described_class).to receive(:post).with(Translator::URL, payload)
+        expect_any_instance_of(described_class).to receive(:post).with(Translator::URL, payload)
 
-        described_class.call(input)
+        described_class.new.call(input)
       end
     end
 
@@ -35,9 +35,9 @@ describe Translator do
       let(:target_language) { 'en' }
 
       it 'posts the correct payload to google translation api' do
-        expect(described_class).to receive(:post).with(Translator::URL, payload)
+        expect_any_instance_of(described_class).to receive(:post).with(Translator::URL, payload)
 
-        described_class.call(input)
+        described_class.new.call(input)
       end
     end
   end

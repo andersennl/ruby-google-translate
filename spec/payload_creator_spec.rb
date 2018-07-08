@@ -12,6 +12,6 @@ describe PayloadCreator do
   end
 
   it "returns the correct payload" do
-    expect(described_class.call(input)).to eq result
+    expect(described_class.new.call(input)).to eq result
   end
 end

@@ -1,8 +1,7 @@
 require 'rest-client'
 require_relative './env.rb'
 require_relative './language_detector.rb'
-require 'json'
-require 'htmlentities'
+require_relative './translation_parser.rb'
 
 class Translator
   URL = 'https://translation.googleapis.com/language/translate/v2'.freeze
@@ -11,15 +10,17 @@ class Translator
     payload = {
       q: input,
       target: target_language(input),
-      key: $API_KEY#Env.api_key
+      key: Env.api_key
     }
 
     post(URL, payload)
   end
 
+  private
+
   def post(url, payload)
     result = RestClient.post(url, payload)
-     HTMLEntities.new.decode JSON.parse(result.body)['data']['translations'][0]['translatedText']
+    parse_result(result)
   end
 
   def target_language(input)
@@ -32,5 +33,9 @@ class Translator
 
   def source_language(input)
     LanguageDetector.new.call(input)
+  end
+
+  def parse_result(result)
+    TranslationParser.new.call(result)
   end
 end

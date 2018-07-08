@@ -16,8 +16,8 @@ describe Client do
   end
 
   it 'makes the translation request' do
-    expect(Translator).to receive(:post).with(Translator::URL, payload)
+    expect_any_instance_of(Translator).to receive(:post).with(Translator::URL, payload)
 
-    described_class.translate(input)
+    described_class.new.translate(input)
   end
 end

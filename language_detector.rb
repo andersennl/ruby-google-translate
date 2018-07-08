@@ -1,6 +1,6 @@
 require 'rest-client'
-require 'json'
 require_relative './env.rb'
+require_relative './language_parser.rb'
 
 class LanguageDetector
   URL = 'https://translation.googleapis.com/language/translate/v2/detect'.freeze
@@ -8,10 +8,16 @@ class LanguageDetector
   def call(input)
     payload = {
       q: input,
-      key: $API_KEY#Env.api_key
+      key: Env.api_key
     }
 
     result = RestClient.post(URL, payload)
-    JSON.parse(result.body)['data']['detections'][0][0]['language']
+    parse_response(result)
+  end
+
+  private
+
+  def parse_response(result)
+    LanguageParser.new.call(result)
   end
 end
